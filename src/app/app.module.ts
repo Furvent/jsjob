@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,17 @@ import { JobListComponent } from './job-list/job-list.component';
 import { JobService } from "./service/job.service";
 import { JobAddFormComponent } from './job-add-form/job-add-form.component';
 import { DaysAgoPipe } from './pipe/days-ago.pipe';
+import { HomeComponent } from './home/home.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
+import { AboutComponent } from './about/about.component';
+
+const routes = [
+  { path: "", component: HomeComponent },
+  { path: "jobs/add", component: JobAddFormComponent },
+  { path: "jobs/:id", component: JobDetailsComponent },
+  { path: "jobs", component: JobListComponent },
+  { path: "about", component: AboutComponent }
+]
 
 @NgModule({
   declarations: [
@@ -18,14 +30,18 @@ import { DaysAgoPipe } from './pipe/days-ago.pipe';
     SearchComponent,
     JobListComponent,
     JobAddFormComponent,
-    DaysAgoPipe
+    DaysAgoPipe,
+    HomeComponent,
+    JobDetailsComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [JobService],
   bootstrap: [AppComponent]

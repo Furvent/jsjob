@@ -1,11 +1,30 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-<furv-job-add-form></furv-job-add-form>
-<furv-search></furv-search>
-<furv-job-list></furv-job-list>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#" routerLink="/" class="navbar-brand">
+        <h1>
+          Welcome to {{ title }}!
+        </h1>
+      </a>
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="#" routerLink="/jobs">
+            Offres
+          </a>
+        </li>
+        <li>
+          <a href="#" routerLink="/jobs/add">
+            Créer une offre
+          </a>
+        </li>
+        <li>
+          <a href="#" routerLink="/about">
+            A propos
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <router-outlet></router-outlet>
