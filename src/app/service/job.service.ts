@@ -8,39 +8,35 @@ import { Subject, of, Observable } from 'rxjs';
 })
 export class JobService {
 
+  BASE_URL = "http://localhost:4201/"
+
   initialJobs: any = [];
   jobs = [];
   jobsSubject = new Subject();
 
   constructor(private httpClient:HttpClient) { }
 
-
-  // A REVOIR, CODE INCOMPREHENSIBLE POUR MOI POUR L'INSTANT
   getJobs() {
-    // On a à la fois des données de data/jobs.json et des données ajoutées par notre formulaire
-    if (this.jobs.length > 0 && this.initialJobs.length > 0) {
-      return of([...this.jobs, ...this.initialJobs]);
-    // On pas encore récupéré de data depuis data/jobs.json
-    } else if (this.jobs.length > 0 && this.initialJobs.length <= 0) {
-      return <Observable<any[]>>this.httpClient.get('data/jobs.json')
-      .pipe(map(response => response))
-      .pipe(tap(data => {
-        this.initialJobs = data;
-        this.jobs = [...this.jobs, ...this.initialJobs]
-      }));
-    // On a des jobs récupérés de data/jobs.json
-    } else {
-      return <Observable<any[]>>this.httpClient.get('data/jobs.json')
+    return <Observable<any[]>>this.httpClient.get(this.BASE_URL + 'api/jobs')
       .pipe(map(response => response))
       .pipe(tap(data => this.initialJobs = data));
-    }
-    
-    
   }
 
   addJobs(jobData) {
     jobData.id = Date.now();
-    this.jobs = [jobData, ...this.jobs];
-    return this.jobsSubject.next(jobData);
+    // this.jobs = [jobData, ...this.jobs];
+    // return this.jobsSubject.next(jobData);
+
+    return this.httpClient.post(this.BASE_URL + 'api/jobs', jobData)
+                          .pipe(map(response => response))
+                          .pipe(tap(data => {
+                            console.log(data)
+                            this.initialJobs.next(jobData);
+                          }));
+  }
+
+  getJobById(id) {
+    return this.httpClient.get(this.BASE_URL + `api/jobs/${id}`)
+    .pipe(map(response => response));
   }
 }
