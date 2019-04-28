@@ -12,7 +12,7 @@ export class JobService {
 
   initialJobs: any = [];
   jobs = [];
-  jobsSubject = new Subject();
+  searchResultSubject = new Subject();
 
   constructor(private httpClient:HttpClient) { }
 
@@ -38,5 +38,14 @@ export class JobService {
   getJobById(id) {
     return this.httpClient.get(this.BASE_URL + `api/jobs/${id}`)
     .pipe(map(response => response));
+  }
+
+  searchJobs(criteria) {
+    console.log(criteria);
+    return this.httpClient.get(this.BASE_URL + `api/search/${criteria.term}/${criteria.place}`)
+                          .pipe(map(response => response))
+                          .pipe(tap(data => {
+                            this.searchResultSubject.next(data);
+                          }));
   }
 }

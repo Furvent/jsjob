@@ -17,13 +17,20 @@ import { JobDetailsComponent } from './job-details/job-details.component';
 import { AboutComponent } from './about/about.component';
 import { ToShortDatePipe } from './pipe/to-short-date.pipe';
 import { ToMoneySymbolPipe } from './pipe/to-money-symbol.pipe';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { RegisterComponent } from './register/register.component';
+import { UserProfilComponent } from './user-profil/user-profil.component';
 
 const routes = [
   { path: "", component: HomeComponent },
   { path: "jobs/add", component: JobAddFormComponent },
   { path: "jobs/:id", component: JobDetailsComponent },
   { path: "jobs", component: JobListComponent },
-  { path: "about", component: AboutComponent }
+  { path: "about", component: AboutComponent },
+  { path: "login", component: AuthenticationComponent },
+  { path: "register", component: RegisterComponent },
+  { path: "profil", component: UserProfilComponent }
 ]
 
 @NgModule({
@@ -37,7 +44,11 @@ const routes = [
     JobDetailsComponent,
     AboutComponent,
     ToShortDatePipe,
-    ToMoneySymbolPipe
+    ToMoneySymbolPipe,
+    SearchResultComponent,
+    AuthenticationComponent,
+    RegisterComponent,
+    UserProfilComponent
   ],
   imports: [
     BrowserModule,
