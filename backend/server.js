@@ -69,7 +69,21 @@ api.get('/jobs', (req, res) => {
     res.json(getAllJobs());
 });
 
-api.post('/jobs', (req, res) => {
+// MIDDLEWARE de controle pour le token
+const checkUserToken = (req, res, next) => {
+    // Dans le header : "Authorization: Bearer suivi du token" Bearer est le type d'authentification utilisé
+    if (!req.header('authorization')) {
+        return res.status(401).json({ success: false, message: "Header d'authentification manquant" })
+    }
+
+    const authorizationParts = req.header('authorization').split(' ');
+    let token = authorizationParts[1];
+    const decodedToken = jwt.verify(token, secret);
+    console.log('decodedToken: ', decodedToken);
+    next();
+}
+
+api.post('/jobs', checkUserToken, (req, res) => {
     const job = req.body;
     addedJobs = [job, ...addedJobs];
     console.log('Total number of jobs: ' + getAllJobs().length);

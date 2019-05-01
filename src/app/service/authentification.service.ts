@@ -19,7 +19,7 @@ export class AuthentificationService {
   }
 
   userIsLoggedIn() {
-    return localStorage.getItem('jbb-data')
+    return !!localStorage.getItem('jbb-data') //!! = un cast en booléean
   }
 
   logOut() {
